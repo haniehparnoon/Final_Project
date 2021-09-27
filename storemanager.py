@@ -3,11 +3,16 @@ import os
 import csv
 import pandas as pd
 import ast
-
-
-
 import functions
 from file_Handler import FileHandler
+import logging
+import datetime
+
+logging.basicConfig(level=logging.DEBUG,
+                    filename='App.log',
+                    filemode='a',
+                    format="*** %(asctime)s  — %(message)s \n",
+                    datefmt='%d-%b-%y %H:%M:%S')
 class StoreManager:
     add_stores_to_file = FileHandler("Stores.csv")
     read_stores_file = FileHandler("Stores.csv")
@@ -36,14 +41,20 @@ class StoreManager:
         product_list = []
         for i in range(1, number_of_product+1):
             print(f"product{i}:")
-            product_name = input("Enter product name")
-            barcode = int(input(" Enter Barcode"))
-            price = int(input(" Enter price"))
-            brand = input("Enter Brand")
-            number_available = int(input(" Enter number of product"))
-            expire_date = int(input(" Enter expire Date"))
-            product_list.append({"product_name": product_name ,"barcode":barcode,"price":price,"brand":brand,
-                             "number_available":number_available,"expire_date":expire_date})
+            try:
+                product_name = input("Enter product name")
+                barcode = int(input(" Enter Barcode(just enter number)"))
+                price = int(input(" Enter price"))
+                brand = input("Enter Brand")
+                number_available = int(input(" Enter number of product"))
+                expire_date = input(" Enter expire Date(00-03-04)")
+                datetime.datetime.strptime(expire_date,'%y-%m-%d')
+                product_list.append({"product_name": product_name, "barcode": barcode, "price": price, "brand": brand,
+                                     "number_available": number_available, "expire_date": expire_date})
+
+            except ValueError:
+                print("wrong input")
+
 
 
 #اینجا چون من داخل init اومدم یکبار اطلاعات رو داخل فایل stores ذخیره کردم ،بار اول که اطلاعات ذخیره میشن مقدار محصولات خالی هست
@@ -61,10 +72,11 @@ class StoreManager:
                     self.products = product_list
                     final_list.append(self.__dict__)
                     self.add_stores_to_file.edit_to_file(final_list)
+                    logging.info(" NEW Products Added")
                 else:
                     result = item_dict["products"]
                     new_product_list = functions.list_parser(result)
-                    print(new_product_list)
+                    #print(new_product_list)
                     for i in new_product_list:
                         product_list.append(i)
                     print(product_list)
@@ -72,6 +84,7 @@ class StoreManager:
                     self.products = product_list
                     final_list.append(self.__dict__)
                     self.add_stores_to_file.edit_to_file(final_list)
+                    logging.info(" NEW Products Added")
 
     def view_remaining_inventory(self):
         self.alarm()
@@ -127,11 +140,7 @@ class StoreManager:
         else:
             print("product name or user name is wrong")
 
-                    #     product_list.append(i)
-                    # print(product_list)
-                    # self.products = product_list
-                    # final_list.append(self.__dict__)
-                    # self.add_stores_to_file.edit_to_file(final_list)
+
 
     def alarm(self):
         reader = self.read_stores_file.read_file()
@@ -144,8 +153,10 @@ class StoreManager:
                     #print(new_result)
                     for j in new_result:
                         if j["number_available"] <=3:
+                            logging.info(f"The product{j} is running out")
                             alarm_list.append(j)
         if alarm_list:
+
             print("---------------------------------------alarm list ---------------------------------------")
             for i in alarm_list:
                 print(i)
@@ -236,7 +247,7 @@ class StoreManager:
 
 
 
-store1 = StoreManager("789","kouroush",1,8)
+# store1 = StoreManager("789","kouroush",1,8)
 store2 = StoreManager("123","refah",2,24)
 #store1.alarm()
 #store1.view_invoices()
@@ -245,8 +256,8 @@ store2 = StoreManager("123","refah",2,24)
 #store1.block_customer_from_store()
 #store1.update_vlue_of_product_list("kouroush","rice",2)
 #store2.update_vlue_of_product_list("kouroush","apple",1)
-#store1.add_product()
+store2.add_product()
 # store1.view_remaining_inventory()
 #store2.add_product()
 # # store1.save_to_json_file()
-store1.view_remaining_inventory()
+#store1.view_remaining_inventory()

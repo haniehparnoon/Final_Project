@@ -1,0 +1,50 @@
+*** 27-Sep-21 10:23:58 — root — INFO — new Store Added 
+
+*** 27-Sep-21 10:24:22 — root — INFO — User Login 
+
+*** 27-Sep-21 10:27:35 — root — INFO — User Login 
+
+*** 27-Sep-21 10:28:56 — root — INFO — new Customer Added 
+
+*** 27-Sep-21 10:30:33 — root — INFO — User Login 
+
+*** 27-Sep-21 10:31:32 — root — INFO — User Login 
+
+*** 27-Sep-21 10:31:32 — root — INFO — un unsuccessful login 
+
+*** 27-Sep-21 10:33:32 — root — INFO — User Login 
+
+*** 27-Sep-21 10:33:32 — root — INFO — un unsuccessful login 
+
+*** 27-Sep-21 10:36:37  — un unsuccessful login 
+
+*** 27-Sep-21 10:36:37  — un unsuccessful login 
+
+*** 27-Sep-21 10:36:37  — un unsuccessful login 
+
+*** 27-Sep-21 10:36:37  — un unsuccessful login 
+
+*** 27-Sep-21 10:36:37  — User Login 
+
+*** 27-Sep-21 10:39:23  — User Login 
+
+*** 27-Sep-21 10:39:23  — un unsuccessful login 
+
+*** 27-Sep-21 10:48:37  — User Login 
+
+*** 27-Sep-21 10:48:37  — un unsuccessful login 
+
+*** 27-Sep-21 10:55:36  — User Login 
+
+*** 27-Sep-21 11:11:07  — User Login 
+
+*** 27-Sep-21 11:11:53  —  NEW Products Added 
+
+*** 27-Sep-21 11:23:21  — The product{'product_name': 'rice', 'barcode': 123, 'price': 3000, 'brand': 'dd', 'number_available': 3, 'expire_date': 3} is running out 
+
+*** 27-Sep-21 20:28:12  — new Store Added 
+
+*** 27-Sep-21 20:54:22  —  NEW Products Added 
+
+*** 27-Sep-21 20:58:09  —  NEW Products Added 
+

@@ -1,1 +1,5 @@
-user_name,store_name,open_time,close_time,products,block_customer09125802237,meow,1,19,"[{'product_name': 'pishi', 'barcode': 1234, 'price': 200000, 'brand': 'meowmeow', 'number_available': 12, 'expire_date': 12}]",123,refah,2,24,,[9122487465]789,kouroush,1,8,"[{'product_name': 'rice', 'barcode': 123, 'price': 3000, 'brand': 'dd', 'number_available': 3, 'expire_date': 3}]","[12345678912, 9122487465]"
+user_name,store_name,open_time,close_time,products,block_customer
+789,kouroush,1,8,"[{'product_name': 'rice', 'barcode': 123, 'price': 3000, 'brand': 'dd', 'number_available': 3, 'expire_date': 3}]","[12345678912, 9122487465]"
+09125802237,meow,1,19,"[{'product_name': 'kivi', 'barcode': 123456, 'price': 7000, 'brand': 'k', 'number_available': 30, 'expire_date': 12}, {'product_name': 'pishi', 'barcode': 1234, 'price': 200000, 'brand': 'meowmeow', 'number_available': 12, 'expire_date': 12}]",
+09199609627,mshiii,12,18,"[{'product_name': 'orange', 'barcode': 123, 'price': 1200, 'brand': 'oo', 'number_available': 30, 'expire_date': 12}]",
+123,refah,2,24,"[{'product_name': 'rr', 'barcode': 45, 'price': 9000, 'brand': 'gh', 'number_available': 80, 'expire_date': '00-09-03'}]",[9122487465]

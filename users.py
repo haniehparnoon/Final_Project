@@ -1,13 +1,20 @@
 import ast
 import hashlib
+import time
 from file_Handler import FileHandler
 from functions import hash_password
 from storemanager import StoreManager
+import logging
 
-
+logging.basicConfig(level=logging.DEBUG,
+                    filename='App.log',
+                    filemode='a',
+                    format="*** %(asctime)s  — %(message)s \n",
+                    datefmt='%d-%b-%y %H:%M:%S')
 class User:
     users_file = FileHandler("users.csv")
     check_username = False
+
 
     @classmethod
     def register_customer(cls):
@@ -40,8 +47,10 @@ class User:
             if password == repeat_password:
                 if not cls.check_username:
                     cls.users_file.add_to_file(customer_dict)
+                    logging.info("new Customer Added")
         else:
             cls.users_file.add_to_file(customer_dict)
+            logging.info("new Customer Added")
 
     @classmethod
     def register_store_manager(cls):
@@ -55,43 +64,51 @@ class User:
         password = input("Enter Password")
         repeat_password = input("Repeat Password")
         store_name = input(" Enter Store name")
-        open_time = int(input("enter open time"))
-        close_time = int(input("enter close time"))
-        # hash_password = password.encode()
-        # hasher_pass = hashlib.sha256(hash_password).hexdigest()
-        h_pass = hash_password(password)
-        store_manager_dict = {"type": "StoreManager", "information": {"username": username, "password": h_pass,
-                                                                      "store_name": store_name, "open_time": open_time,
-                                                                     "close_time": close_time}}
-        list_users = cls.users_file.read_file()
-        if list_users:
-            #print(list_users)
-            for item in list_users:
-                i = item["information"]
-                convertedDict = ast.literal_eval(i)
-                if convertedDict["username"] == username:
-                    print("username exist")
-                    cls.check_username = True
-                    break
+        open_time = input("enter open time(00:00)")
+        close_time = input("enter close time(00:00)")
+        try:
+            time.strptime(open_time, '%H:%M')
+            time.strptime(close_time, '%H:%M')
 
-            if password == repeat_password:
-                if not cls.check_username:
-                    cls.users_file.add_to_file(store_manager_dict)
-        else:
-            cls.users_file.add_to_file(store_manager_dict)
+            h_pass = hash_password(password)
+            store_manager_dict = {"type": "StoreManager", "information": {"username": username, "password": h_pass,
+                                                                          "store_name": store_name, "open_time": open_time,
+                                                                         "close_time": close_time}}
+            list_users = cls.users_file.read_file()
+            if list_users:
+                #print(list_users)
+                for item in list_users:
+                    i = item["information"]
+                    convertedDict = ast.literal_eval(i)
+                    if convertedDict["username"] == username:
+                        print("username exist")
+                        cls.check_username = True
+                        break
+
+                if password == repeat_password:
+                    if not cls.check_username:
+                        cls.users_file.add_to_file(store_manager_dict)
+                        logging.info("new Store Added")
+            else:
+                cls.users_file.add_to_file(store_manager_dict)
+                logging.info("new Store Added")
+        except ValueError:
+            print("wrong format ,format should be 00:00")
 
     @classmethod
     def login_user(cls):
-        bool_logout = False
         username_login = input("Enter your username")
         password_login = input("Enter password")
         hash_pass = hash_password(password_login)
         list_users = cls.users_file.read_file()
+        bool_check_login = True
         if list_users:
             for item in list_users:
                 i = item["information"]
                 convertedDict = ast.literal_eval(i)
                 if convertedDict["username"] == username_login and convertedDict["password"] == hash_pass:
+                    bool_check_login =False
+                    logging.info("User Login")
                     if item["type"] == "StoreManager":
                         username=convertedDict["username"]
                         store_name=convertedDict["store_name"]
@@ -130,16 +147,17 @@ class User:
                                 stor_manager.sign_out()
                                 break
 
-                    else:
-                        print("Customer\ndastresi customer")
+                    elif item["type"] == "Customer":
+                        #todo Access Customer
+                        print("Customer(Access Customer)")
 
-        # elif bool_logout:
-        #     menu.show_menu()
 
-                # else:
-                #     print("wrong user name or password")
         else:
             print("no value")
+
+        if bool_check_login:
+            print("un unsuccessful login")
+            logging.info("un unsuccessful login")
 
 
 
